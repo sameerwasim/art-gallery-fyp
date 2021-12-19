@@ -5,7 +5,7 @@ import Home from '../Components/Home/Home'
 const WebsiteRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home/>} />
+      <Route path="/" exact element={<Home/>} />
     </Routes>
   )
 }

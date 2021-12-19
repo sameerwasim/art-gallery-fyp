@@ -24,7 +24,7 @@ const Header = () => {
             <NavDropdown title="More" id="moreDropDown">
               <NavDropdown.Item href="#action3">Reviews</NavDropdown.Item>
             </NavDropdown>
-            <Link className="nav-link mx-md-3" to="/">Sign In</Link>
+            <Link className="nav-link mx-md-3" to="/sign-in">Sign In</Link>
             <Link className="nav-link" to="/">Create an account</Link>
           </Nav>
         </Navbar.Collapse>
