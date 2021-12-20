@@ -2,6 +2,7 @@ import { Container, Form, Button, Row, Col,Image , Navbar, Nav, NavDropdown } fr
 import { Link } from 'react-router-dom'
 
 import {FaStar, FaUser, FaHome ,FaEnvelope, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import './profile.scss'
 
 const Profile = () => {
   return (
@@ -34,16 +35,19 @@ const Profile = () => {
     
       <Container className="px-0" fluid>
         <Row>
-          <Col md={3}>
-            <div className="pt-5 d-flex flex-column text-center bg-dark h-100">
-              <Link className="text-white text-decoration-none" to="/dashboard">
+          <Col md={3} className="sidebar">
+            <div className="pt-5 ps-4 d-flex flex-column justify-content-start bg-dark h-100">
+              <Link className="text-decoration-none" to="/dashboard">
                  <FaHome/>&nbsp;  Dashboard
               </Link>
-              <Link className="my-4 text-white text-decoration-none" to="/profile">
+              <Link className="text-decoration-none" to="/profile">
                  <FaUser/>&nbsp;  Profile
               </Link>
-              <Link className="text-white text-decoration-none" to="/addreview">
+              <Link className="text-decoration-none" to="/addreview">
                  <FaStar/>&nbsp; Reviews
+              </Link>
+              <Link className=" text-decoration-none" to="/listing">
+                 <FaStar/>&nbsp; Add Listing
               </Link>
             </div>
           </Col>

@@ -28,7 +28,6 @@ const Search = () => {
                             <Form.Control className="p-3 shadow-sm border border-dark" type="text" placeholder="Enter description" />
                         </Form.Group>
                         <Form.Group controlId="formFile" className="mb-3">
-    <Form.Label>Default file input example</Form.Label>
     <Form.Control type="file" />
   </Form.Group>
                         <Button className="rounded-pill px-4 py-2 mt-3" variant="dark" type="submit">

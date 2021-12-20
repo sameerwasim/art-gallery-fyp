@@ -8,7 +8,7 @@ const Artwork = () => {
     {/*==================================== Artwork ============================= */}
         <Container className="m-lg-5 m-0 px-md-5 px-0 artwork">
             <Row className="my-5">
-                
+                <h1 className="mb-4">Gallery</h1>
                     <Col lg={3} md={6} className="mb-4">
                         <Card className="border-0 shadow p-3">
                             <Image style={{objectFit:'cover', width:'100%', height:'300px'}} src="https://images.unsplash.com/photo-1588260692987-01360da8185b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nzh8fHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="" />
@@ -50,7 +50,7 @@ const Artwork = () => {
             <hr/>
             {/*=========================== Artist ===============================*/}
             <Row className="mt-5">
-                
+            <h1 className="mb-4">Artist(s)</h1>
                     <Col  lg={2} md={4}>
                         <Card className="border-0 p-3">
                             <div className="d-flex justify-content-center">

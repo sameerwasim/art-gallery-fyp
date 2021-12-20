@@ -6,6 +6,7 @@ import {
   Navbar,
   Nav,
   NavDropdown,
+  Form, Button
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -15,9 +16,9 @@ import {
   FaHome,
   FaEnvelope,
   FaInstagram,
-  FaLinkedin,
+  FaLinkedin, FaSearch
 } from "react-icons/fa";
-import './profile.scss'
+import "./profile.scss";
 
 const Footer = () => {
   return (
@@ -58,16 +59,14 @@ const Footer = () => {
         </Container>
       </Navbar>
       <Container fluid className="px-0">
+        <Row>
         <Col md={3} className="sidebar">
           <div className="pt-5 ps-4 d-flex flex-column text-start bg-dark h-100">
             <Link className=" text-decoration-none" to="/dashboard">
               <FaHome />
               &nbsp; Dashboard
             </Link>
-            <Link
-              className="text-decoration-none"
-              to="/profile"
-            >
+            <Link className="text-decoration-none" to="/profile">
               <FaUser />
               &nbsp; Profile
             </Link>
@@ -75,14 +74,68 @@ const Footer = () => {
               <FaStar />
               &nbsp; Reviews
             </Link>
-            <Link className=" text-decoration-none" to="/listing">
-                 <FaStar/>&nbsp; Add Listing
-              </Link>
+            <Link className=" text-decoration-none" to="/addreview">
+              <FaStar />
+              &nbsp; Add Listing
+            </Link>
           </div>
         </Col>
         <Col md={9}>
-
+            <h1 className="my-5">Add Listing</h1>
+          <Form className="m-3 ">
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                className="p-3 shadow-sm border border-dark"
+                type="text"
+                placeholder="Enter title"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Artist</Form.Label>
+              <Form.Control
+                className="p-3 shadow-sm border border-dark"
+                type="text"
+                placeholder="Enter artist"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Category</Form.Label>
+              <Form.Control
+                className="p-3 shadow-sm border border-dark"
+                type="text"
+                placeholder="Enter category"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Size</Form.Label>
+              <Form.Control
+                className="p-3 shadow-sm border border-dark"
+                type="text"
+                placeholder="Enter size in inches"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                className="p-3 shadow-sm border border-dark"
+                type="text"
+                placeholder="Enter description"
+              />
+            </Form.Group>
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Control type="file" />
+            </Form.Group>
+            <Button
+              className="rounded-pill px-4 py-2 mt-3"
+              variant="dark"
+              type="submit"
+            >
+              Submit
+            </Button>
+          </Form>
         </Col>
+        </Row>
       </Container>
       <footer>
         <Container fluid className="p-lg-4 p-2">

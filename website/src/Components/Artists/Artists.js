@@ -1,6 +1,6 @@
 import WebsiteLayout from '../Layouts/Website.layout'
 import { Container, Card, Row, Col, Image, Form, Button } from "react-bootstrap";
-import { FaStar } from 'react-icons/fa';
+import { FaStar,FaSearch } from 'react-icons/fa';
 
 const Artist = () => {
   return (
@@ -45,7 +45,31 @@ const Artist = () => {
                                 </p>
                             </div>
                         </Card>
-                    
+                        <Form className="mt-3">
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control className="p-3 shadow-sm border border-dark" type="text" placeholder="Enter title" />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Artist</Form.Label>
+                            <Form.Control className="p-3 shadow-sm border border-dark" type="text" placeholder="Enter artist" />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Category</Form.Label>
+                            <Form.Control className="p-3 shadow-sm border border-dark" type="text" placeholder="Enter category" />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control className="p-3 shadow-sm border border-dark" type="text" placeholder="Enter description" />
+                        </Form.Group>
+                        <Form.Group controlId="formFile" className="mb-3">
+    <Form.Label>Default file input example</Form.Label>
+    <Form.Control type="file" />
+  </Form.Group>
+                        <Button className="rounded-pill px-4 py-2 mt-3" variant="dark" type="submit">
+                        <FaSearch /> &nbsp;Search 
+                        </Button>
+                    </Form>
                 </Col>
                 <Col lg={9} md={12}>
                     <h4>Art Works</h4>

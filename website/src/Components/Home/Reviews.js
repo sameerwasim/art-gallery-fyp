@@ -8,7 +8,7 @@ const Reviews = () => {
     {/*==================================== Reviews ============================= */}
         
         <Container className="mb-5 artwork">
-            
+        <h1 className="mb-4">Reviews</h1>
             <Row className="mt-5">
                 {[1,2,3,4,5,6].map (item => (
                     <Col lg={4} md={6}>
