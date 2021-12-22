@@ -1,0 +1,12 @@
+.content {
+  max-height: 500px;
+  overflow-x: auto;
+}
+
+@media (max-width: 450px) {
+
+  .content {
+    max-height: none!important;
+  }
+
+}

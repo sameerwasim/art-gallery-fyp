@@ -3,10 +3,10 @@ import { Container, Card, Row, Col, Image } from 'react-bootstrap'
 import { FaStar } from 'react-icons/fa';
 const Reviews = () => {
   return (
-      
+
     <>
     {/*==================================== Reviews ============================= */}
-        
+
         <Container className="mb-5 artwork">
         <h1 className="mb-4">Reviews</h1>
             <Row className="mt-5">
@@ -19,14 +19,14 @@ const Reviews = () => {
                                         <Image style={{objectFit:'cover'}} width="60px" height="60px" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlJTIwcG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" className="rounded-circle" />
                                     </div>
                                     <div className="align-self-center ms-3">
-                                        <h6 className="">Sameer Waseem</h6>
+                                        <h6 className="">Agatha Moria</h6>
                                         <div className="d-flex text-warning">
                                             <FaStar />
                                             <FaStar />
                                             <FaStar />
                                             <FaStar />
                                             <FaStar />
-                                            <span className="ms-0 text-dark ps-2">5.0</span>
+                                            <span className="ms-0 text-dark ps-2">5</span>
                                         </div>
                                     </div>
                                 </div>

@@ -4,7 +4,7 @@ import { Auth } from '../Context/Auth.context'
 
 import Dashboard from '../Components/User/Dashboard'
 import Profile from '../Components/User/Profile'
-import AddReview from '../Components/User/AddReviews'
+import AllReviews from '../Components/User/Reviews'
 import Listing from '../Components/User/Listing'
 
 const ProtectedRoutes = () => {
@@ -15,7 +15,7 @@ const ProtectedRoutes = () => {
     <Routes>
       <Route path="/dashboard" exact element={<Dashboard/>} />
       <Route path="/profile" exact element={<Profile/>} />
-      <Route path="/addreview" exact element={<AddReview/>} />
+      <Route path="/my-reviews" exact element={<AllReviews/>} />
       <Route path="/listing" exact element={<Listing/>} />
 
     </Routes>

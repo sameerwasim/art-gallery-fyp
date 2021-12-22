@@ -8,15 +8,13 @@ const Hero = () => {
   return (
     <>
       {/*==================================== Hero ============================= */}
-      
+
         <div style={heroStyle} className="p-5 ">
-            <h1 className="p-5 text-white text-center m-5">
-            Lorem Ipsum is simply dummy text of the printing 
-           
+            <h1 className="p-5 text-center text-primary m-5" style={{textShadow: '3px 2px #333'}}>
+                Art Gallery to share the artist best
             </h1>
-           
         </div>
-     
+
     </>
   );
 };
