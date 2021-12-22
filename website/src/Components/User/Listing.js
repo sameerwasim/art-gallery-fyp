@@ -1,18 +1,23 @@
 import WebsiteLayout from '../Layouts/Website.layout'
+import { useState, useEffect } from 'react'
 import {
   Container,
   Row,
   Col,
-  Image,
-  Form,
-  Button
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import { UserProfileService } from '../../services/authentication/authentication'
 import Sidebar from '../Shared/UserDashboard/Sidebar'
 import './user.scss'
 
 const Listing = () => {
+
+  const [user, setUser] = useState([])
+  useEffect(async () => {
+    const result = await UserProfileService()
+    setUser(result);
+  }, [])
+
   return (
     <WebsiteLayout>
       <Container fluid className="px-0">
@@ -21,59 +26,18 @@ const Listing = () => {
             <Sidebar active="dashboard" />
           </Col>
           <Col md={9} className="content">
-            <h1 className="my-5">Add Listing</h1>
-            <Form className="m-3 ">
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Title</Form.Label>
-                <Form.Control
-                  className="p-3 shadow-sm border border-dark"
-                  type="text"
-                  placeholder="Enter title"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Artist</Form.Label>
-                <Form.Control
-                  className="p-3 shadow-sm border border-dark"
-                  type="text"
-                  placeholder="Enter artist"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Category</Form.Label>
-                <Form.Control
-                  className="p-3 shadow-sm border border-dark"
-                  type="text"
-                  placeholder="Enter category"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Size</Form.Label>
-                <Form.Control
-                  className="p-3 shadow-sm border border-dark"
-                  type="text"
-                  placeholder="Enter size in inches"
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Description</Form.Label>
-                <Form.Control
-                  className="p-3 shadow-sm border border-dark"
-                  type="text"
-                  placeholder="Enter description"
-                />
-              </Form.Group>
-              <Form.Group controlId="formFile" className="mb-3">
-                <Form.Control type="file" />
-              </Form.Group>
-              <Button
-                className="rounded-pill px-4 py-2 mt-3"
-                variant="dark"
-                type="submit"
-              >
-                Submit
-              </Button>
-            </Form>
+
+            <Container fluid>
+              <Row>
+                <Col md={6}><h1>My Artworks</h1></Col>
+                <Col md={6}>
+                  <div className="d-flex justify-content-md-end">
+                    <Link className="btn btn-dark mt-2" to="/add/listing">Add Artowrk</Link>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+
           </Col>
         </Row>
       </Container>

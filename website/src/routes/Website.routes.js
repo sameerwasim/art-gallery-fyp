@@ -8,7 +8,7 @@ import Contact from '../Components/Contact/Contact'
 import FAQs from '../Components/FAQs/FAQs'
 import About from '../Components/About/About'
 import Reviews from '../Components/Reviews/Reviews'
-import Thankyou from '../Components/Thankyou/Thankyou'
+import Thankyou from '../Components/ThankYou/ThankYou'
 
 
 const WebsiteRoutes = () => {
@@ -22,8 +22,7 @@ const WebsiteRoutes = () => {
       <Route path="/contact" exact element={<Contact/>} />
       <Route path="/about" exact element={<About/>} />
       <Route path="/reviews" exact element={<Reviews/>} />
-      <Route path="/thankyou" exact element={<Thankyou/>} />
-
+      <Route path="/thank-you" exact element={<Thankyou/>} />
     </Routes>
   )
 }

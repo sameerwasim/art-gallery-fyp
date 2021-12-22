@@ -41,6 +41,7 @@ const AuthProvider = props => {
     let result = await Axios.get(`${app.apiUrl}auth/verify-token`, {headers: {'x-access-token': token}})
     setIsAuthenticated(result.data)
     localStorage.setItem('refreshCycle', result.data)
+    if (!result.data) { localStorage.setItem('user', '') }
   }
 
   const authContextValue = {

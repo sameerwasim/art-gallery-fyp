@@ -9,7 +9,7 @@ const Search = () => {
             <Row className="p-5">
                 <Col md={3}>
                     <h5>Search Artwork(s)</h5>
-                    
+
                     <Form className="mt-3">
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Title</Form.Label>
@@ -23,15 +23,8 @@ const Search = () => {
                             <Form.Label>Category</Form.Label>
                             <Form.Control className="p-3 shadow-sm border border-dark" type="text" placeholder="Enter category" />
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control className="p-3 shadow-sm border border-dark" type="text" placeholder="Enter description" />
-                        </Form.Group>
-                        <Form.Group controlId="formFile" className="mb-3">
-    <Form.Control type="file" />
-  </Form.Group>
                         <Button className="rounded-pill px-4 py-2 mt-3" variant="dark" type="submit">
-                        <FaSearch /> &nbsp;Search 
+                          <FaSearch /> &nbsp;Search
                         </Button>
                     </Form>
                 </Col>

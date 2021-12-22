@@ -1,4 +1,5 @@
 import WebsiteLayout from '../Layouts/Website.layout'
+import { useState, useEffect } from 'react'
 import {
   Container,
   Row,
@@ -6,11 +7,18 @@ import {
   Image,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+import { UserProfileService } from '../../services/authentication/authentication'
 import Sidebar from '../Shared/UserDashboard/Sidebar'
 import './user.scss'
 
 const Dashboard = () => {
+
+  const [user, setUser] = useState([])
+  useEffect(async () => {
+    const result = await UserProfileService()
+    setUser(result);
+  }, [])
+
   return (
     <WebsiteLayout>
       <Container fluid className="px-0">
@@ -19,11 +27,17 @@ const Dashboard = () => {
             <Sidebar active="dashboard" />
           </Col>
           <Col md={9} className="content">
-            <div className="text-center">
-              <h1 className="display-1 mt-5 pt-5">
-                ONLINE ART GALLERY
-              </h1>
-            </div>
+
+            <h1>Dashboard</h1>
+            <span>Welcome, {user.name}!</span>
+            <Container fluid>
+                <Row>
+                  <Col>
+                    {}
+                  </Col>
+                </Row>
+            </Container>
+            
           </Col>
         </Row>
       </Container>

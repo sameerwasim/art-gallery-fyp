@@ -58,9 +58,22 @@ const VerifyAccountService = async (id) => {
   })
 }
 
+const UserProfileService = async (id) => {
+  const result = await axios.get(`${app.apiUrl}${PATH}user/`,
+    {headers: {'x-access-token': localStorage.getItem('token')}})
+  if (result.data.error === 0) {
+    return result.data.user
+  }
+  else if (result.data.error === 1) {
+    return false
+  }
+}
+
+
 
 export {
   SignUpService,
   SignInService,
-  VerifyAccountService
+  VerifyAccountService,
+  UserProfileService
 }

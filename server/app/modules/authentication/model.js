@@ -17,6 +17,15 @@ var Auth = function(auth){
   this.email  = auth.email;
 };
 
+Auth.find = function (auth, result) {
+  dbConn.query(`SELECT image, name, username, email, isVerified FROM users WHERE id = ?`, [auth.id], (err, res) => {
+    if (err)
+      result(null, err)
+    else
+      result(null, res[0])
+  })
+}
+
 // registers a user
 Auth.register = function (auth, result) {
   dbConn.query("SELECT * FROM users WHERE username = ? OR email = ?",
@@ -65,7 +74,7 @@ Error 1 means no Account
 Error 2 means invalid Password
 */
 Auth.login = function (auth, result) {
-  dbConn.query('SELECT * FROM users WHERE email = ? OR username = ? LIMIT 1', [auth.email, auth.email],
+  dbConn.query('SELECT * FROM users WHERE (email = ? OR username = ?) AND status = 1 LIMIT 1', [auth.email, auth.email],
   (err, res) => {
     if (res.length != 0) {
       bcrypt.compare(auth.password, res[0].password, (err, hash) => {

@@ -12,8 +12,8 @@ import { Link } from "react-router-dom";
 import Sidebar from '../Shared/UserDashboard/Sidebar'
 import './user.scss'
 
-
 const Profile = () => {
+
   return (
     <WebsiteLayout>
       <Container fluid className="px-0">
