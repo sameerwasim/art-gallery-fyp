@@ -7,15 +7,15 @@ import {
   Image,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { UserProfileService } from '../../services/authentication/authentication'
 import Sidebar from '../Shared/UserDashboard/Sidebar'
+import { UserProfileService } from '../../services/authentication/authentication'
 import './user.scss'
 
 const Dashboard = () => {
 
   const [user, setUser] = useState([])
   useEffect(async () => {
-    const result = await UserProfileService()
+    var result = await UserProfileService()
     setUser(result);
   }, [])
 
@@ -33,11 +33,11 @@ const Dashboard = () => {
             <Container fluid>
                 <Row>
                   <Col>
-                    {}
+
                   </Col>
                 </Row>
             </Container>
-            
+
           </Col>
         </Row>
       </Container>

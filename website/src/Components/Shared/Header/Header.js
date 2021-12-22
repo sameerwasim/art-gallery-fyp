@@ -16,7 +16,7 @@ const Header = () => {
   }
 
   return (
-    <Navbar className="header" bg="dark" expand="lg">
+    <Navbar className="header" bg="dark" variant="light" expand="lg">
       <Container>
         <Navbar.Toggle aria-controls="header-navbar-nav" />
         <Navbar.Collapse id="header-navbar-nav">

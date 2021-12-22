@@ -1,8 +1,5 @@
 const Category = require('./model')
 
-var jwt = require('jsonwebtoken');
-var jwtSecret = require('../../config/app.config').jwt;
-
 exports.findAll = function(req, res) {
   Category.findAll(function(err, response) {
     if (err)

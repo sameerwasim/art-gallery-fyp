@@ -18,7 +18,7 @@ var Auth = function(auth){
 };
 
 Auth.find = function (auth, result) {
-  dbConn.query(`SELECT image, name, username, email, isVerified FROM users WHERE id = ?`, [auth.id], (err, res) => {
+  dbConn.query(`SELECT id, image, name, username, email, isVerified FROM users WHERE id = ?`, [auth.id], (err, res) => {
     if (err)
       result(null, err)
     else

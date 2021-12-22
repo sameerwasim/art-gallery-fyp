@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use('/', router)
+app.use('/public', express.static('public'))
 require('./app/routes/routes')(app);
 
 // listen for requests

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 22, 2021 at 09:51 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.25
+-- Host: 127.0.0.1
+-- Generation Time: Dec 23, 2021 at 12:07 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,56 @@ SET time_zone = "+00:00";
 --
 -- Database: `untitled_fyp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `artworkimages`
+--
+
+CREATE TABLE `artworkimages` (
+  `artworkId` int(11) NOT NULL,
+  `image` varchar(75) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `artworkimages`
+--
+
+INSERT INTO `artworkimages` (`artworkId`, `image`) VALUES
+(1, '1640211920056-wallpaper.jpg'),
+(2, '1640211938575-wallpaper.jpg'),
+(3, '1640212089433-wallpaper.jpg'),
+(4, '1640212321460-wallpaper.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `artworks`
+--
+
+CREATE TABLE `artworks` (
+  `id` int(11) NOT NULL,
+  `artist` int(11) NOT NULL,
+  `category` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `size` varchar(15) NOT NULL,
+  `price` varchar(10) NOT NULL,
+  `description` varchar(300) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 0,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updatedAt` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `artworks`
+--
+
+INSERT INTO `artworks` (`id`, `artist`, `category`, `title`, `size`, `price`, `description`, `status`, `createdAt`, `updatedAt`) VALUES
+(1, 5, 1, 'Title', 'size', '100 ', 'test', 0, '2021-12-22 22:25:20', NULL),
+(2, 5, 1, 'Title', 'size', '100 ', 'test', 0, '2021-12-22 22:25:38', NULL),
+(3, 5, 1, 'Title', 'size', '100 ', 'test', 0, '2021-12-22 22:28:09', NULL),
+(4, 5, 2, 'title', '100x100', '10000', 'test', 0, '2021-12-22 22:32:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -71,6 +121,12 @@ INSERT INTO `users` (`id`, `image`, `name`, `username`, `email`, `password`, `st
 --
 
 --
+-- Indexes for table `artworks`
+--
+ALTER TABLE `artworks`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -85,6 +141,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `artworks`
+--
+ALTER TABLE `artworks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `categories`

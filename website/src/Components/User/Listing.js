@@ -4,18 +4,25 @@ import {
   Container,
   Row,
   Col,
+  Card,
+  Image
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { UserProfileService } from '../../services/authentication/authentication'
 import Sidebar from '../Shared/UserDashboard/Sidebar'
+import { UserProfileService } from '../../services/authentication/authentication'
+import { findArtistArtworksService } from '../../services/artwork/artwork'
 import './user.scss'
 
 const Listing = () => {
 
   const [user, setUser] = useState([])
+  const [artworks, setArtworks] = useState([])
   useEffect(async () => {
-    const result = await UserProfileService()
+    var result = await UserProfileService()
     setUser(result);
+
+    result = await findArtistArtworksService(result.id)
+    setArtworks(result)
   }, [])
 
   return (
@@ -35,6 +42,20 @@ const Listing = () => {
                     <Link className="btn btn-dark mt-2" to="/add/listing">Add Artowrk</Link>
                   </div>
                 </Col>
+              </Row>
+
+              <Row>
+                {artworks && artworks.map(artwork => (
+                  <Col lg={4} md={6} className="my-4">
+                      <Card className="border-0 shadow p-3">
+                          <Image style={{objectFit:'cover', width:'100%', height:'300px'}} src={artwork.thumbnail} alt={artwork.title} />
+                          <div className="p-3 text-center">
+                              <h6 className="mb-0">{artwork.title}</h6>
+                          <small className="text-muted">By: {artwork.name}</small>
+                          </div>
+                      </Card>
+                  </Col>
+                ))}
               </Row>
             </Container>
 

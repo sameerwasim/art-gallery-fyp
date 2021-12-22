@@ -1,5 +1,5 @@
 import WebsiteLayout from '../Layouts/Website.layout'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Container,
   Row,
@@ -7,13 +7,20 @@ import {
   Form,
   Button
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from '../Shared/UserDashboard/Sidebar'
 import './user.scss'
 import { UserProfileService } from '../../services/authentication/authentication'
 import { findAllCategoryService } from '../../services/categories/categories'
+import { createArtworkService } from '../../services/artwork/artwork'
 
 const AddListing = () => {
+
+  const title = useRef()
+  const category = useRef()
+  const size = useRef()
+  const description = useRef()
+  const price = useRef()
 
   const [user, setUser] = useState([])
   const [categories, setCategories] = useState([])
@@ -22,11 +29,11 @@ const AddListing = () => {
     setUser(result);
 
     var result = await findAllCategoryService()
-    console.log(result);
-    setCategories(result);
+    setCategories(result.categories);
   }, [])
 
   const [files, setFiles] = useState([])
+  const [images, setImages] = useState([])
   const uploadMultipleFilesPreview = (e) => {
     var fileArray = []; var fileObj = [];
     fileObj.push(e.target.files)
@@ -34,7 +41,23 @@ const AddListing = () => {
       fileArray.push(URL.createObjectURL(fileObj[0][i]))
     }
     setFiles(fileArray)
+    setImages(fileObj[0])
   }
+
+  const navigate = useNavigate()
+  const submit = async () => {
+    const titleVal = title.current.value
+    const categoryVal = category.current.value
+    const descriptionVal = description.current.value
+    const sizeVal = size.current.value
+    const priceVal = price.current.value
+
+    const res = await createArtworkService(titleVal, categoryVal, descriptionVal, sizeVal, priceVal, images)
+    if (res)
+      navigate('/listing')
+  }
+
+
 
   return (
     <WebsiteLayout>
@@ -48,44 +71,57 @@ const AddListing = () => {
             <h1>Add Listing</h1>
             <Form className="m-3 ">
               <Row>
-                <Col md={4}>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Col md={6}>
+                  <Form.Group className="mb-3">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control size="sm"
+                    <Form.Control size="sm" ref={title}
                       className="p-3 shadow-sm border border-dark"
                       type="text"
                       placeholder="Enter title"
                     />
                   </Form.Group>
                 </Col>
-                <Col md={4}>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Col md={6}>
+                  <Form.Group className="mb-3">
                     <Form.Label>Category</Form.Label>
-                    <Form.Control size="sm"
+                    <Form.Control size="sm" ref={category}
                       className="p-3 shadow-sm border border-dark"
                       as="select"
                       placeholder="Enter category"
                     >
                     <option value="">Select category</option>
+                    {categories && categories.map(category => (
+                      <option key={category.id} value={category.id}>{category.category}</option>
+                    ))}
                     </Form.Control>
                   </Form.Group>
                 </Col>
-                <Col md={4}>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Col md={6}>
+                  <Form.Group className="mb-3">
                     <Form.Label>Size</Form.Label>
-                    <Form.Control size="sm"
+                    <Form.Control size="sm" ref={size}
                       className="p-3 shadow-sm border border-dark"
                       type="text"
                       placeholder="Enter size in inches"
                     />
                   </Form.Group>
                 </Col>
-                <Col md={12}>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control size="sm"
+                <Col md={6}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Price</Form.Label>
+                    <Form.Control size="sm" ref={price}
                       className="p-3 shadow-sm border border-dark"
-                      as="textarea"
+                      type="text"
+                      placeholder="Enter Price"
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={12}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control size="sm" ref={description}
+                      className="p-3 shadow-sm border border-dark"
+                      as="textarea" maxLength="300"
                       placeholder="Enter description"
                     />
                   </Form.Group>
@@ -98,14 +134,14 @@ const AddListing = () => {
                 </Col>
               </Row>
               <div className="preview-images">
-                {(files || []).map(url => (
-                  <img src={url} alt="..." />
+                {(files || []).map((url, i)=> (
+                  <img src={url} key={i} />
                 ))}
               </div>
               <Button
                 className="rounded-pill px-4 py-2 mt-3"
                 variant="dark"
-                type="submit"
+                onClick={submit}
               >
                 Submit
               </Button>

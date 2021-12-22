@@ -6,8 +6,8 @@ var Category = function(category){
   this.category      = category.category;
 };
 
-Category.findAll = function (category, result) {
-  dbConn.query(`SELECT * FROM category`, (err, res) => {
+Category.findAll = function (result) {
+  dbConn.query(`SELECT * FROM categories`, (err, res) => {
     if (err)
       result(null, err)
     else

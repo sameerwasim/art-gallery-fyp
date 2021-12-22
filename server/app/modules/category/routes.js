@@ -9,6 +9,6 @@ router
   .post('/', checkToken, Category.create)
   .get('/', Category.findAll)
   .put('/', checkToken, Category.edit)
-  .delete('/:id', checkToken Category.delete)
+  .delete('/:id', checkToken, Category.delete)
 
 module.exports = router
