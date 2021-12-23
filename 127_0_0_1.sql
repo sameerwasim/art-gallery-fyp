@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 23, 2021 at 12:07 AM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.3.25
+-- Host: localhost
+-- Generation Time: Dec 23, 2021 at 07:42 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -37,10 +37,12 @@ CREATE TABLE `artworkimages` (
 --
 
 INSERT INTO `artworkimages` (`artworkId`, `image`) VALUES
-(1, '1640211920056-wallpaper.jpg'),
-(2, '1640211938575-wallpaper.jpg'),
-(3, '1640212089433-wallpaper.jpg'),
-(4, '1640212321460-wallpaper.jpg');
+(1, '1640267291067-favicon.png'),
+(2, '1640267832412-logo.png'),
+(3, '1640267881366-daily-paigam-old.png'),
+(4, '1640267881366-daily-paigam-old.png'),
+(5, '1640267881366-daily-paigam-old.png'),
+(6, '1640267881366-daily-paigam-old.png');
 
 -- --------------------------------------------------------
 
@@ -66,10 +68,12 @@ CREATE TABLE `artworks` (
 --
 
 INSERT INTO `artworks` (`id`, `artist`, `category`, `title`, `size`, `price`, `description`, `status`, `createdAt`, `updatedAt`) VALUES
-(1, 5, 1, 'Title', 'size', '100 ', 'test', 0, '2021-12-22 22:25:20', NULL),
-(2, 5, 1, 'Title', 'size', '100 ', 'test', 0, '2021-12-22 22:25:38', NULL),
-(3, 5, 1, 'Title', 'size', '100 ', 'test', 0, '2021-12-22 22:28:09', NULL),
-(4, 5, 2, 'title', '100x100', '10000', 'test', 0, '2021-12-22 22:32:01', NULL);
+(1, 5, 1, 'Artwork', '100x200', '3000', 'This is a test Description', 0, '2021-12-23 13:48:11', NULL),
+(2, 5, 2, 'Artworks @', '100x2300', '1000', 'Test', 0, '2021-12-23 13:57:12', NULL),
+(3, 5, 2, 'Test', '100x2033', '110043', 'This is some shit', 0, '2021-12-23 13:58:01', NULL),
+(4, 5, 1, 'Artwork', '100x200', '3000', 'This is a test Description', 0, '2021-12-23 13:48:11', NULL),
+(5, 5, 2, 'Artworks @', '100x2300', '1000', 'Test', 0, '2021-12-23 13:57:12', NULL),
+(6, 5, 2, 'Test', '100x2033', '110043', 'This is some shit', 0, '2021-12-23 13:58:01', NULL);
 
 -- --------------------------------------------------------
 
@@ -105,6 +109,8 @@ CREATE TABLE `users` (
   `email` varchar(75) NOT NULL,
   `password` varchar(300) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1,
+  `phone` varchar(40) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
   `isVerified` tinyint(1) NOT NULL DEFAULT 0,
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -113,8 +119,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `image`, `name`, `username`, `email`, `password`, `status`, `isVerified`, `createdAt`) VALUES
-(5, 'no-user-profile-picture.jpeg', 'Sameer', 'sameer', 'sameerwaseem01@gmail.com', '$2b$10$VcOOI0GUObql1l1WUF2sQuELQNz1dFZK2jH6edvNhCcuvNE54c0V2', 1, 1, '2021-12-22 19:24:17');
+INSERT INTO `users` (`id`, `image`, `name`, `username`, `email`, `password`, `status`, `phone`, `description`, `isVerified`, `createdAt`) VALUES
+(5, '1640283246580-favicon copy.png', 'Sameer', 'sameer', 'sameerwaseem01@gmail.com', '$2b$10$VcOOI0GUObql1l1WUF2sQuELQNz1dFZK2jH6edvNhCcuvNE54c0V2', 1, '0301', 'test', 1, '2021-12-23 18:14:06');
 
 --
 -- Indexes for dumped tables
@@ -146,7 +152,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `artworks`
 --
 ALTER TABLE `artworks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `categories`
