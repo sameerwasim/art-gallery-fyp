@@ -5,12 +5,13 @@ import {
   Row,
   Col,
   Form,
-  Button
+  Button,
+  Alert
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from '../Shared/UserDashboard/Sidebar'
 import './user.scss'
-import { UserProfileService } from '../../services/authentication/authentication'
+import { UserProfileService, VerifyAccountRepeatService } from '../../services/authentication/authentication'
 import { findAllCategoryService } from '../../services/categories/categories'
 import { createArtworkService } from '../../services/artwork/artwork'
 
@@ -61,7 +62,7 @@ const AddListing = () => {
 
   return (
     <WebsiteLayout>
-      <Container fluid className="px-0">
+      <Container className="mx-0 px-0">
         <Row>
           <Col md={3} className="sidebar">
             <Sidebar active="dashboard" />
@@ -69,6 +70,20 @@ const AddListing = () => {
           <Col md={9} className="content">
 
             <h1>Add Listing</h1>
+
+            <div className="mt-3">
+              {(user && !user.isVerified) && (
+                <Alert variant="danger">
+                  <h5>Account Not Verified</h5>
+                  <p>
+                    Please, Complete the details of your account. Also,
+                    Verify your account to start listing your artworks on Art Gallery.
+                   </p>
+                   <span className="text-primary" style={{'cursor': 'pointer'}} onClick={() => VerifyAccountRepeatService(user.id)}>Verify Now</span>
+                </Alert>
+              )}
+            </div>
+
             <Form className="m-3 ">
               <Row>
                 <Col md={6}>
@@ -141,7 +156,6 @@ const AddListing = () => {
               <Button
                 className="rounded-pill px-4 py-2 mt-3"
                 variant="dark"
-                onClick={submit}
               >
                 Submit
               </Button>

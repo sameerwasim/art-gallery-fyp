@@ -55,9 +55,32 @@ const findArtistArtworksService = async (id) => {
 
 }
 
+const findArtworksService = async (limit) => {
+
+    const result = await axios.get(`${app.apiUrl}${PATH}?limit=${limit}`)
+    if (result.data.error === 0) {
+      return result.data.artworks
+    } else {
+      toast.warn('Error while fetching artworks')
+    }
+
+}
+
+const findOneArtworkService = async (id) => {
+
+    const result = await axios.get(`${app.apiUrl}${PATH}${id}`)
+    if (result.data.error === 0) {
+      return result.data.artworks
+    } else {
+      toast.warn('Error while fetching artworks')
+    }
+
+}
+
 
 
 export {
   createArtworkService,
-  findArtistArtworksService
+  findArtistArtworksService,
+  findArtworksService
 }

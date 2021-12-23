@@ -16,9 +16,37 @@ exports.create = function(req, res) {
   }
 }
 
+exports.update = function(req, res) {
+  const data = new Auth(req.body);
+  const image = req.file ? req.file : ''
+  if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+    res.status(400).send({ error:1, message: 'Please provide all required field' });
+  } else {
+    const token = req.headers['x-access-token']
+    jwt.verify(token, jwtSecret, (err, decoded) => {
+      if (decoded) {
+        Auth.update(data, decoded.id, image, function(err, response) {
+          if (err)
+            res.send(err);
+          res.json(response);
+        });
+      }
+    })
+  }
+}
+
 exports.verifyAccount = function(req, res) {
   const data = new Auth(req.params);
   Auth.verifyAccount(data, function(err, response) {
+    if (err)
+      res.send(err);
+    res.json(response);
+  });
+}
+
+exports.verifyAccountRepeat = function(req, res) {
+  const data = new Auth(req.params);
+  Auth.verifyAccountRepeat(data, function(err, response) {
     if (err)
       res.send(err);
     res.json(response);

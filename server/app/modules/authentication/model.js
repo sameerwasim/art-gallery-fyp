@@ -15,10 +15,14 @@ var Auth = function(auth){
   this.username  = auth.username;
   this.password  = auth.password;
   this.email  = auth.email;
+  this.phone  = auth.phone;
+  this.description  = auth.description;
 };
 
 Auth.find = function (auth, result) {
-  dbConn.query(`SELECT id, image, name, username, email, isVerified FROM users WHERE id = ?`, [auth.id], (err, res) => {
+  dbConn.query(`SELECT id, image, name, username, email, description,
+    isVerified, (SELECT count(*) FROM artworks WHERE artworks.artist = ? ) as totalArtworks
+    FROM users WHERE id = ?`, [auth.id, auth.id], (err, res) => {
     if (err)
       result(null, err)
     else
@@ -55,6 +59,48 @@ Auth.register = function (auth, result) {
     }
   });
 };
+
+// update a user
+Auth.update = function (auth, id, image, result) {
+  dbConn.query(`UPDATE users SET name = ?, phone = ?, description = ? WHERE id = ?`,
+  [auth.name, auth.phone, auth.description, id],
+  function (err, res) {
+    if(err) {
+      console.log('error: ', err);
+      result(null, {error: 1});
+    } else {
+      if (image) {
+        dbConn.query(`UPDATE users SET image = ? WHERE id = ?`, [image.filename, id],
+        (err, res) => {
+          if (err)
+            result(null, {error: 1})
+          else
+            result(null, {error: 0})
+        })
+      } else {
+        result(null, {error: 0})
+      }
+    }
+  });
+};
+
+
+// repeat verification of a user
+Auth.verifyAccountRepeat = function (auth, result) {
+  dbConn.query("SELECT email FROM users WHERE id = ?",
+  [auth.id], function (err, res) {
+    if(err) {
+      console.log('error: ', err);
+      result(null, {error: 1});
+    } else {
+      sendEmail(
+        'Verify your account', res[0].email, '',
+        '<p>Thanks for joining us.</p>', `${url}verify-account/${auth.id}`, 'Verify your account')
+      result(null, {error: 0})
+    }
+  });
+};
+
 
 // verify a user account
 Auth.verifyAccount = function (auth, result) {

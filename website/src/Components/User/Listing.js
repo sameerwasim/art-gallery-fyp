@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import Sidebar from '../Shared/UserDashboard/Sidebar'
 import { UserProfileService } from '../../services/authentication/authentication'
 import { findArtistArtworksService } from '../../services/artwork/artwork'
+import { urlHelper } from '../../helpers'
 import './user.scss'
 
 const Listing = () => {
@@ -27,7 +28,7 @@ const Listing = () => {
 
   return (
     <WebsiteLayout>
-      <Container fluid className="px-0">
+      <Container className="mx-0 px-0">
         <Row>
           <Col md={3} className="sidebar">
             <Sidebar active="dashboard" />
@@ -47,13 +48,15 @@ const Listing = () => {
               <Row>
                 {artworks && artworks.map(artwork => (
                   <Col lg={4} md={6} className="my-4">
-                      <Card className="border-0 shadow p-3">
-                          <Image style={{objectFit:'cover', width:'100%', height:'300px'}} src={artwork.thumbnail} alt={artwork.title} />
-                          <div className="p-3 text-center">
-                              <h6 className="mb-0">{artwork.title}</h6>
-                          <small className="text-muted">By: {artwork.name}</small>
-                          </div>
-                      </Card>
+                      <Link to={`/artwork/${urlHelper(artwork.title)}-${artwork.id}`} style={{textDecoration: 'none'}}>
+                        <Card className="border-0 shadow p-3">
+                            <Image style={{objectFit:'contain', width:'100%', height:'300px'}} src={artwork.thumbnail} alt={artwork.title} />
+                            <div className="text-center">
+                                <h6 className="mb-0 text-dark">{artwork.title}</h6>
+                            <small className="text-muted">By: {artwork.name}</small>
+                            </div>
+                        </Card>
+                      </Link>
                   </Col>
                 ))}
               </Row>

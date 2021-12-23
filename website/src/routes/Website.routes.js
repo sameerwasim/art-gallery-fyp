@@ -15,9 +15,9 @@ const WebsiteRoutes = () => {
   return (
     <Routes>
       <Route path="/" exact element={<Home/>} />
-      <Route path="/search" exact element={<Search/> } />
+      <Route path="/search/:category" exact element={<Search/> } />
       <Route path="/artists" exact element={<Artists/>} />
-      <Route path="/artwork" exact element={<Artwork/>} />
+      <Route path="/artwork/:id" exact element={<Artwork/>} />
       <Route path="/faqs" exact element={<FAQs/>} />
       <Route path="/contact" exact element={<Contact/>} />
       <Route path="/about" exact element={<About/>} />

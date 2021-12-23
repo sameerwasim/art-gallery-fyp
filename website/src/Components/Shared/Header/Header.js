@@ -16,9 +16,10 @@ const Header = () => {
   }
 
   return (
-    <Navbar className="header" bg="dark" variant="light" expand="lg">
+    <Navbar className="header" bg="dark" variant="dark" expand="lg">
       <Container>
         <Navbar.Toggle aria-controls="header-navbar-nav" />
+        <h1 className="text-end text-white d-md-none mt-1 me-3">Art Gallery</h1>
         <Navbar.Collapse id="header-navbar-nav">
           <Nav className="me-auto">
             <Link className="nav-link" to="/search/artists">Search Artists</Link>

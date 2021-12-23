@@ -4,7 +4,17 @@ var jwt = require('jsonwebtoken');
 var jwtSecret = require('../../config/app.config').jwt;
 
 exports.findAll = function(req, res) {
-  Artwork.findAll(function(err, response) {
+  data = req.query
+  Artwork.findAll(data, function(err, response) {
+    if (err)
+      res.send(err);
+    res.json(response);
+  });
+}
+
+exports.findOne = function(req, res) {
+  id = parseInt(req.params.id)
+  Artwork.findOne(id, function(err, response) {
     if (err)
       res.send(err);
     res.json(response);

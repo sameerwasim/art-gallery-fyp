@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react'
 import WebsiteLayout from "../Layouts/Website.layout";
+import { useParams } from 'react-router-dom'
 import {
   Container,
   Card,
@@ -15,6 +17,9 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 
 const Artwork = () => {
+
+  const { id } = useParams()
+
   return (
     <WebsiteLayout>
       <Container className="px-lg-5 py-lg-5 p-2">
@@ -25,17 +30,17 @@ const Artwork = () => {
               options={{
                 rewind: true,
                 width: 800,
-               
+
                 gap: "1rem",
                 breakpoints: {
                      1440 : {perPage : 1, perMove : 1 },
-                     480 :  { perPage: 1 , perMove: 1}  
+                     480 :  { perPage: 1 , perMove: 1}
                 },
               }}
             >
               <SplideSlide>
                 <img style={{objectFit:'cover'}} width="100%" height="450px" src="https://images.unsplash.com/photo-1574169207511-e21a21c8075a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHBhaW50aW5nc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Image 1" />
-               
+
               </SplideSlide>
               <SplideSlide>
                 <img style={{objectFit:'cover'}} width="100%" height="450px" src="https://images.unsplash.com/photo-1573491601995-695e5154f91b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTB8fHBhaW50aW5nc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Image 2" />
@@ -64,17 +69,17 @@ const Artwork = () => {
                         <h5>Email : <small className="text-muted">email@example.com</small></h5> */}
  <p> an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only</p>
                   </div>
-                </div> 
-            </Card> 
+                </div>
+            </Card>
           </Col>
         </Row>
         <hr/>
         <Row className="my-5">
-            
+
         </Row>
-        
-               <Reviews /> 
-        
+
+               <Reviews />
+
       </Container>
     </WebsiteLayout>
   );

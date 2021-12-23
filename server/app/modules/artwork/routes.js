@@ -18,6 +18,7 @@ var upload = multer({ storage: storage }).array('images')
 router
   .post('/', checkToken, upload, Artwork.create)
   .get('/', Artwork.findAll)
+  .get('/:id', Artwork.findOne)
   .get('/artist/:id', Artwork.findByArtistId)
   .put('/', checkToken, Artwork.edit)
   .delete('/:id', checkToken, Artwork.delete)

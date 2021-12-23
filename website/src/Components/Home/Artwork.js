@@ -1,49 +1,45 @@
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import WebsiteLayout from '../Layouts/Website.layout'
 import { Container, Card, Row, Col, Image } from 'react-bootstrap'
+import { findArtworksService } from '../../services/artwork/artwork'
+import { urlHelper } from '../../helpers'
 
 const Artwork = () => {
+
+  const [artworks, setArtworks] = useState([])
+  useEffect(async () => {
+    const result = await findArtworksService(8)
+    setArtworks(result)
+  }, [])
+
   return (
     <Container className="m-lg-5 m-0 px-md-5 px-0 artwork">
         {/*==================================== Artwork ============================= */}
+        <Row>
+          <Col>
+            <h1>Artworks(s)</h1>
+          </Col>
+          <Col><div className="mt-2 d-flex justify-content-md-end">
+            <Link className="btn btn-dark" to="/search/artworks">
+              View All
+            </Link>
+          </div></Col>
+        </Row>
         <Row className="my-5">
-            <h1 className="mb-4">Artworks(s)</h1>
-                <Col lg={3} md={6} className="mb-4">
-                    <Card className="border-0 shadow p-3">
-                        <Image style={{objectFit:'cover', width:'100%', height:'300px'}} src="https://images.unsplash.com/photo-1588260692987-01360da8185b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nzh8fHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="" />
-                        <div className="p-3 text-center">
-                            <h6 className="mb-0">Art Name</h6>
-                        <small className="text-muted">By: Artist Name</small>
-                        </div>
-                    </Card>
-                </Col>
-                <Col lg={3} md={6} className="mb-4">
-                    <Card className="border-0 shadow p-3">
-                        <Image style={{objectFit:'cover', width:'100%', height:'300px'}}  src="https://images.unsplash.com/photo-1569091791842-7cfb64e04797?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTB8fGFydHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="" />
-                        <div className="p-3 text-center">
-                            <h6 className="mb-0">Art Name</h6>
-                        <small className="text-muted">By: Artist Name</small>
-                        </div>
-                    </Card>
-                </Col>
-                <Col lg={3} md={6} className="mb-4">
-                    <Card className="border-0 shadow p-3">
-                        <Image style={{objectFit:'cover', width:'100%', height:'300px'}}  src="https://images.unsplash.com/photo-1553949345-eb786bb3f7ba?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjV8fHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="" />
-                        <div className="p-3 text-center">
-                            <h6 className="mb-0">Art Name</h6>
-                        <small className="text-muted">By: Artist Name</small>
-                        </div>
-                    </Card>
-                </Col>
-                <Col lg={3} md={6} className="mb-4">
-                    <Card className="border-0 shadow p-3">
-                        <Image style={{objectFit:'cover', width:'100%', height:'300px'}} src="https://images.unsplash.com/photo-1618331833071-ce81bd50d300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fHBhaW50aW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="" />
-                        <div className="p-3 text-center">
-                            <h6 className="mb-0">Art Name</h6>
-                        <small className="text-muted">By: Artist Name</small>
-                        </div>
-                    </Card>
-                </Col>
-
+          {artworks && artworks.map(artwork => (
+            <Col lg={4} md={6} className="my-4">
+                <Link to={`/artwork/${urlHelper(artwork.title)}-${artwork.id}`} style={{textDecoration: 'none'}}>
+                  <Card className="border-0 shadow p-3">
+                      <Image style={{objectFit:'contain', width:'100%', height:'300px'}} src={artwork.thumbnail} alt={artwork.title} />
+                      <div className="text-center">
+                          <h6 className="mb-0 text-dark">{artwork.title}</h6>
+                      <small className="text-muted">By: {artwork.name}</small>
+                      </div>
+                  </Card>
+                </Link>
+            </Col>
+          ))}
         </Row>
         <hr/>
         {/*=========================== Artist ===============================*/}

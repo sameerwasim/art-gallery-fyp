@@ -30,7 +30,7 @@ const AllReviews = () => {
 
   return (
     <WebsiteLayout>
-      <Container fluid className="px-0">
+      <Container className="mx-0 px-0">
         <Row>
           <Col md={3} className="sidebar">
             <Sidebar active="dashboard" />
