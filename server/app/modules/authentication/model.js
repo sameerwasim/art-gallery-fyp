@@ -184,8 +184,9 @@ Error 1 means no Account
 Error 2 means invalid Password
 */
 Auth.login = function (auth, result) {
-  const admin = auth.admin ? `AND admin = ${auth.admin}` : ''
-  dbConn.query(`SELECT * FROM users WHERE (email = ? OR username = ?) AND status = 1 ${admin} LIMIT 1`, [auth.email, auth.email],
+  const admin = auth.admin ? `AND admin = '${auth.admin}'` : ''
+  dbConn.query(`SELECT * FROM users WHERE (email = ? OR username = ?) AND (status = 1 ${admin}) LIMIT 1`,
+  [auth.email, auth.email],
   (err, res) => {
     if (res.length != 0) {
       bcrypt.compare(auth.password, res[0].password, (err, hash) => {

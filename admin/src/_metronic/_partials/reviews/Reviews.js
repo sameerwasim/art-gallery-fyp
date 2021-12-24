@@ -15,11 +15,72 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export class Reviews extends Component {
 
+  constructor(props) {
+  super(props);
+    this.state = {
+      review: [],
+      filteredData: [],
+      loading: true,
+      searchInput: "",
+    };
+  }
+
+  globalSearch = () => {
+    let { searchInput, review } = this.state;
+    let filteredData = review.filter((value) => {
+      return (
+        value.category.toLowerCase().includes(searchInput.toLowerCase())
+      );
+    });
+    this.setState({ filteredData });
+  };
+
+  handleChange = (event) => {
+    this.setState({ searchInput: event.target.value }, () => {
+      this.globalSearch();
+    });
+  };
+
+
+  getReview() {
+    Axios.get(`${process.env.REACT_APP_API_URL}review`)
+    .then(res => {
+      this.setState({review: res.data.reviews})
+    })
+  }
+
+  componentDidMount() {
+    this.getReview();
+  }
+
+
   render() {
+
+    const columns = [
+      {
+        Header: "Id",
+        accessor: "id",
+      },
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+      },
+      {
+        Header: "Phone",
+        accessor: "phone",
+      },
+      {
+        Header: "Message",
+        accessor: "message",
+      },
+    ];
 
     return (
       <>
-
         <div className="card mt-2">
           <div className="card-body">
             <div className="my-3 ">
@@ -31,6 +92,16 @@ export class Reviews extends Component {
                 className="ml-3"
               />
             </div>
+            <ReactTable
+              data={
+                this.state.filteredData &&
+                this.state.filteredData.length
+                ? this.state.filteredData
+                : this.state.review
+              }
+              columns={columns}
+              defaultPageSize={20}
+            />
           </div>
         </div>
         <ToastContainer autoClose={3000} />

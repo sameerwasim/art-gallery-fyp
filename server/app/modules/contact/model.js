@@ -28,7 +28,7 @@ Contact.findAll = function (result) {
     if (err)
       result(null, err)
     else {
-      result(null, {error: 0, reviews: res})
+      result(null, {error: 0, contact: res})
     }
   })
 }

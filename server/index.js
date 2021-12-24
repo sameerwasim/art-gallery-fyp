@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 var router = express.Router({strict: true});
 // use cors
-var corsOptions = { origin: ['http://localhost:3000', 'http://localhost:3001'] }
+var corsOptions = { origin: ['http://localhost:3000', 'http://localhost:3005'] }
 app.use(cors(corsOptions))
 // Setup server port
 const port = process.env.PORT || 5000;

@@ -15,11 +15,68 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export class Artist extends Component {
 
+  constructor(props) {
+  super(props);
+    this.state = {
+      artists: [],
+      filteredData: [],
+      loading: true,
+      searchInput: "",
+    };
+  }
+
+  globalSearch = () => {
+    let { searchInput, artists } = this.state;
+    let filteredData = artists.filter((value) => {
+      return (
+        value.category.toLowerCase().includes(searchInput.toLowerCase())
+      );
+    });
+    this.setState({ filteredData });
+  };
+
+  handleChange = (event) => {
+    this.setState({ searchInput: event.target.value }, () => {
+      this.globalSearch();
+    });
+  };
+
+
+  getArtists() {
+    Axios.get(`${process.env.REACT_APP_API_URL}auth/artists`)
+    .then(res => {
+      this.setState({artists: res.data.artists})
+    })
+  }
+
+  componentDidMount() {
+    this.getArtists();
+  }
+
+
   render() {
+
+    const columns = [
+      {
+        Header: "Id",
+        accessor: "id",
+      },
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Username",
+        accessor: "username",
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+      }
+    ];
 
     return (
       <>
-
         <div className="card mt-2">
           <div className="card-body">
             <div className="my-3 ">
@@ -31,6 +88,16 @@ export class Artist extends Component {
                 className="ml-3"
               />
             </div>
+            <ReactTable
+              data={
+                this.state.filteredData &&
+                this.state.filteredData.length
+                ? this.state.filteredData
+                : this.state.artists
+              }
+              columns={columns}
+              defaultPageSize={20}
+            />
           </div>
         </div>
         <ToastContainer autoClose={3000} />

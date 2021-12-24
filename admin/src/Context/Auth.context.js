@@ -37,7 +37,7 @@ const AuthProvider = props => {
 
   {/* Function to verify if token is valid or not */}
   const verifyToken = async (token) => {
-    let result = await Axios.get(`${process.env.REACT_APP_API_URL}admin/verify-token`, {headers: {'x-access-token': token}})
+    let result = await Axios.get(`${process.env.REACT_APP_API_URL}auth/verify-token`, {headers: {'x-access-token': token}})
     setIsAuthenticated(result.data)
     localStorage.setItem('refreshCycle', result.data)
   }

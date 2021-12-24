@@ -72,7 +72,7 @@ export function SubHeader() {
           <div className="d-flex align-items-baseline mr-5">
             {/* begin::Title */}
             <h2 className="subheader-title text-dark font-weight-bold my-2 mr-3">
-              {subheader.title}
+              
             </h2>
             {/* end::Title */}
 

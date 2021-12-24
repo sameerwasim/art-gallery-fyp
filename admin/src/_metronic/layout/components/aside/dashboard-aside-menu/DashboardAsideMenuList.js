@@ -45,21 +45,10 @@ export function DashboardAsideMenuList({ layoutProps }) {
             <span className="svg-icon menu-icon">
               <SVG src={toAbsoluteUrl("/media/svg/icons/Layout/Layout-grid.svg")} />
             </span>
-            <span className="menu-text">Add</span>
-          </NavLink>
-        </li>
-        {/*end::1 Add*/}
-
-        {/*begin::1 Manage*/}
-        <li className={`menu-item ${getMenuItemActive("#", false)}`} aria-haspopup="true" >
-          <NavLink className="menu-link" to="#">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Layout/Layout-grid.svg")} />
-            </span>
             <span className="menu-text">Manage</span>
           </NavLink>
         </li>
-        {/*end::1 Manage*/}
+        {/*end::1 Add*/}
 
         {/* Artist */}
         {/* begin::section */}
