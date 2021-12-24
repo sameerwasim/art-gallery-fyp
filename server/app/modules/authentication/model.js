@@ -19,6 +19,38 @@ var Auth = function(auth){
   this.description  = auth.description;
 };
 
+Auth.findAll = function (data, result) {
+
+  const limit = data.limit ? `limit ${parseInt(data.limit)}` : ''
+  const artist = data.artist ? `AND artist = ${parseInt(data.artist)}` : ''
+  const category = data.category ? `AND category = ${parseInt(data.category)}` : ''
+
+  dbConn.query(`SELECT id, name, username, image FROM users WHERE isVerified = 1
+    ${artist} ${category} ORDER BY createdAt DESC ${limit}`,
+    (err, res) => {
+    if (err)
+      result(null, err)
+    else
+      result(null, {error: 0, artists: res})
+  })
+}
+
+Auth.findOne = function (username, result) {
+
+  dbConn.query(`SELECT users.id, users.name, users.username,
+    users.phone, users.email, users.description, users.image,
+    (SELECT avg(rating) FROM reviews WHERE reviews.artwork IN (
+      SELECT id FROM artworks WHERE artworks.artist = users.id
+    )) as rating
+    FROM users WHERE username = ?`,
+    [username], (err, res) => {
+    if (err)
+      result(null, err)
+    else
+      result(null, {error: 0, artist: res[0]})
+  })
+}
+
 Auth.find = function (auth, result) {
   dbConn.query(`SELECT id, image, name, username, email, description,
     isVerified, (SELECT count(*) FROM artworks WHERE artworks.artist = ? ) as totalArtworks
@@ -49,6 +81,37 @@ Auth.register = function (auth, result) {
               const response = await sendEmail(
                 'Verify your account', auth.email, '',
                 '<p>Thanks for joining us.</p>', `${url}verify-account/${res.insertId}`, 'Verify your account')
+              result(null, {error: 0})
+            }
+          })
+        });
+      } else {
+        result(null, {error: 1});
+      }
+    }
+  });
+};
+
+
+Auth.resetPassword = function (auth, result) {
+  dbConn.query("SELECT * FROM users WHERE username = ? OR email = ?",
+  [auth.email, auth.email], function (err, res) {
+    if(err) {
+      console.log('error : ', err);
+      result(null, {error: 1});
+    } else {
+      if (res[0]) {
+        const random = (Math.floor(100000 + Math.random() * 900000)).toString(16)
+        bcrypt.hash(random, saltRounds, function(err, hash) {
+          dbConn.query('UPDATE users SET password=? WHERE id = ?',
+          [hash, res[0].id], async (err, response) => {
+            if (err) {
+              console.log('error: ', err);
+              result(null, {error: 1})
+            } else {
+              const response = await sendEmail(
+                'Password Reset', res[0].email, '',
+                '<p>Your new password is: '+random+'</p>')
               result(null, {error: 0})
             }
           })

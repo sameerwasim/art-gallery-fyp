@@ -1,7 +1,7 @@
 import WebsiteLayout from '../Layouts/Website.layout'
 import Hero from '../Home/Hero'
 import Artwork from '../Home/Artwork';
-import Reviews from '../Home/Reviews';
+import Review from '../Home/Reviews';
 
 const Home = () => {
   return (
@@ -10,8 +10,8 @@ const Home = () => {
         <Artwork />
         <div className="container">
           <hr/>
+          <Review />
         </div>
-        <Reviews />
     </WebsiteLayout>
   )
 }

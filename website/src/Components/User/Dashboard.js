@@ -51,7 +51,7 @@ const Dashboard = () => {
                 <div className="d-flex justify-content-center">
                   <img className="shadow-sm img-fluid rounded-circle" src={(user.image === 'no-user-profile-picture.jpeg')
                     ? `${app.appUrl}no-user-profile-picture.jpeg` : `${app.apiUrl}public/${user.image}`}
-                    height="100px" width="100px" />
+                    height="100px" width="100px" alt={`${user.name} Profile Picture`} />
                 </div>
               </Col>
               <Col sm={10}>
@@ -62,7 +62,6 @@ const Dashboard = () => {
                   </div>
                   <div className="d-flex flex-column justify-content-end">
                     <span className="fw-bold">My Total Artworks: <span className="text-muted">{user.totalArtworks}</span></span>
-                    <span className="fw-bold">Total Artworks Views: <span className="text-muted"></span></span>
                   </div>
                 </div>
               </Col>

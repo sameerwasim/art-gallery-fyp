@@ -8,20 +8,24 @@ import {
   Button,
   Alert
 } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Sidebar from '../Shared/UserDashboard/Sidebar'
 import './user.scss'
 import { UserProfileService, VerifyAccountRepeatService } from '../../services/authentication/authentication'
 import { findAllCategoryService } from '../../services/categories/categories'
-import { createArtworkService } from '../../services/artwork/artwork'
+import { editArtworkService, findOneArtworkService } from '../../services/artwork/artwork'
 
-const AddListing = () => {
+const EditListing = () => {
 
-  const title = useRef()
-  const category = useRef()
-  const size = useRef()
-  const description = useRef()
-  const price = useRef()
+  const {id} = useParams()
+
+  const [artworkId, setArtworkId] = useState()
+  const [artwork, setArtwork] = useState()
+  const [title, setTitle] = useState()
+  const [category, setCategory] = useState()
+  const [size, setSize] = useState()
+  const [description, setDescription] = useState()
+  const [price, setPrice] = useState()
 
   const [user, setUser] = useState([])
   const [categories, setCategories] = useState([])
@@ -31,6 +35,17 @@ const AddListing = () => {
 
     result = await findAllCategoryService()
     setCategories(result.categories);
+
+    const split = id.split('-')
+    setArtworkId(split[split.length - 1])
+    result = await findOneArtworkService(split[split.length - 1])
+    setArtwork(result);
+
+    setTitle(result.title)
+    setCategory(result.category)
+    setSize(result.size)
+    setDescription(result.description)
+    setPrice(result.price)
   }, [])
 
   const [files, setFiles] = useState([])
@@ -47,13 +62,14 @@ const AddListing = () => {
 
   const navigate = useNavigate()
   const submit = async () => {
-    const titleVal = title.current.value
-    const categoryVal = category.current.value
-    const descriptionVal = description.current.value
-    const sizeVal = size.current.value
-    const priceVal = price.current.value
+    const id = artworkId
+    const titleVal = title
+    const categoryVal = category
+    const descriptionVal = description
+    const sizeVal = size
+    const priceVal = price
 
-    const res = await createArtworkService(titleVal, categoryVal, descriptionVal, sizeVal, priceVal, images)
+    const res = await editArtworkService(id, titleVal, categoryVal, descriptionVal, sizeVal, priceVal, images)
     if (res)
       navigate('/thank-you')
   }
@@ -69,7 +85,7 @@ const AddListing = () => {
           </Col>
           <Col md={9} className="content">
 
-            <h1>Add Listing</h1>
+            <h1>Edit Listing</h1>
 
             <div className="mt-3">
               {(user && !user.isVerified) && (
@@ -89,9 +105,9 @@ const AddListing = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control size="sm" ref={title}
+                    <Form.Control size="sm" value={title}
                       className="p-3 shadow-sm border border-dark"
-                      type="text"
+                      type="text" onChange={(e) => setTitle(e.target.value)}
                       placeholder="Enter title"
                     />
                   </Form.Group>
@@ -99,14 +115,14 @@ const AddListing = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label>Category</Form.Label>
-                    <Form.Control size="sm" ref={category}
+                    <Form.Control size="sm"
                       className="p-3 shadow-sm border border-dark"
-                      as="select"
+                      as="select" onChange={(e) => setCategory(e.target.value)}
                       placeholder="Enter category"
                     >
                     <option value="">Select category</option>
-                    {categories && categories.map(category => (
-                      <option key={category.id} value={category.id}>{category.category}</option>
+                    {categories && categories.map(item => (
+                      <option key={item.id} selected={category == item.category && `true`} value={item.id}>{item.category}</option>
                     ))}
                     </Form.Control>
                   </Form.Group>
@@ -114,9 +130,9 @@ const AddListing = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label>Size</Form.Label>
-                    <Form.Control size="sm" ref={size}
+                    <Form.Control size="sm" value={size}
                       className="p-3 shadow-sm border border-dark"
-                      type="text"
+                      type="text" onChange={(e) => setSize(e.target.value)}
                       placeholder="Enter size in inches"
                     />
                   </Form.Group>
@@ -124,9 +140,9 @@ const AddListing = () => {
                 <Col md={6}>
                   <Form.Group className="mb-3">
                     <Form.Label>Price</Form.Label>
-                    <Form.Control size="sm" ref={price}
+                    <Form.Control size="sm" value={price}
                       className="p-3 shadow-sm border border-dark"
-                      type="text"
+                      type="text" onChange={(e) => setPrice(e.target.price)}
                       placeholder="Enter Price"
                     />
                   </Form.Group>
@@ -134,9 +150,9 @@ const AddListing = () => {
                 <Col md={12}>
                   <Form.Group className="mb-3">
                     <Form.Label>Description</Form.Label>
-                    <Form.Control size="sm" ref={description}
+                    <Form.Control size="sm" value={description}
                       className="p-3 shadow-sm border border-dark"
-                      as="textarea" maxLength="300"
+                      as="textarea" maxLength="300"  onChange={(e) => setDescription(e.target.price)}
                       placeholder="Enter description"
                     />
                   </Form.Group>
@@ -156,7 +172,7 @@ const AddListing = () => {
               <Button
                 className="rounded-pill px-4 py-2 mt-3"
                 variant="dark"
-                onClick={user.isVerified && submit}
+                onClick={submit}
               >
                 Submit
               </Button>
@@ -169,4 +185,4 @@ const AddListing = () => {
   );
 };
 
-export default AddListing;
+export default EditListing;

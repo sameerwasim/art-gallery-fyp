@@ -7,6 +7,7 @@ import Profile from '../Components/User/Profile'
 import AllReviews from '../Components/User/Reviews'
 import Listing from '../Components/User/Listing'
 import AddListing from '../Components/User/AddListing'
+import EditListing from '../Components/User/EditListing'
 
 const ProtectedRoutes = () => {
 
@@ -21,6 +22,7 @@ const ProtectedRoutes = () => {
           <Route path="/my-reviews" exact element={<AllReviews/>} />
           <Route path="/listing" exact element={<Listing/>} />
           <Route path="/add/listing" exact element={<AddListing/>} />
+          <Route path="/edit/listing/:id" exact element={<EditListing/>} />
         </>
       ) : (
         <>
@@ -29,6 +31,7 @@ const ProtectedRoutes = () => {
           <Route path="/my-reviews" exact element={<Navigate to="/sign-in"/>} />
           <Route path="/listing" exact element={<Navigate to="/sign-in"/>} />
           <Route path="/add/listing" exact element={<Navigate to="/sign-in"/>} />
+          <Route path="/edit/listing/:id" exact element={<Navigate to="/sign-in"/>} />
         </>
       )}
     </Routes>

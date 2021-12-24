@@ -23,7 +23,7 @@ const Footer = () => {
             <hr style={{backgroundColor:'white',height:'2px'}}/>
             <div className="d-flex justify-content-center">
               <Link className="px-2 text-decoration-none text-white" to="/artists">Artist</Link>
-              <Link className="px-2 text-decoration-none text-white" to="/artwork">Artworks</Link>
+              <Link className="px-2 text-decoration-none text-white" to="/artworks">Artworks</Link>
               <Link className="px-2 text-decoration-none text-white" to="/reviews">Reviews</Link>
             </div>
             <div className="d-flex justify-content-center">

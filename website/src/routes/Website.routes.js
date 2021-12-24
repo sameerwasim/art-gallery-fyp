@@ -5,10 +5,8 @@ import Search from '../Components/Search/Search'
 import Artists from '../Components/Artists/Artists'
 import Artwork from '../Components/Artists/Artwork'
 import Contact from '../Components/Contact/Contact'
-import FAQs from '../Components/FAQs/FAQs'
 import About from '../Components/About/About'
-import Reviews from '../Components/Reviews/Reviews'
-import Thankyou from '../Components/ThankYou/ThankYou'
+import ThankYou from '../Components/ThankYou/ThankYou'
 
 
 const WebsiteRoutes = () => {
@@ -16,13 +14,11 @@ const WebsiteRoutes = () => {
     <Routes>
       <Route path="/" exact element={<Home/>} />
       <Route path="/search/:category" exact element={<Search/> } />
-      <Route path="/artists" exact element={<Artists/>} />
       <Route path="/artwork/:id" exact element={<Artwork/>} />
-      <Route path="/faqs" exact element={<FAQs/>} />
+      <Route path="/artist/:username" exact element={<Artists/>} />
       <Route path="/contact" exact element={<Contact/>} />
       <Route path="/about" exact element={<About/>} />
-      <Route path="/reviews" exact element={<Reviews/>} />
-      <Route path="/thank-you" exact element={<Thankyou/>} />
+      <Route path="/thank-you" exact element={<ThankYou/>} />
     </Routes>
   )
 }

@@ -3,12 +3,43 @@ const Auth = require('./model')
 var jwt = require('jsonwebtoken');
 var jwtSecret = require('../../config/app.config').jwt;
 
+exports.findAll = function(req, res) {
+  data = req.query
+  Auth.findAll(data, function(err, response) {
+    if (err)
+      res.send(err);
+    res.json(response);
+  });
+}
+
+exports.findOne = function(req, res) {
+  username = req.params.username
+  Auth.findOne(username, function(err, response) {
+    if (err)
+      res.send(err);
+    res.json(response);
+  });
+}
+
 exports.create = function(req, res) {
   const data = new Auth(req.body);
   if(req.body.constructor === Object && Object.keys(req.body).length === 0){
     res.status(400).send({ error:1, message: 'Please provide all required field' });
   } else {
     Auth.register(data, function(err, response) {
+      if (err)
+        res.send(err);
+      res.json(response);
+    });
+  }
+}
+
+exports.resetPassword = function(req, res) {
+  const data = new Auth(req.body);
+  if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+    res.status(400).send({ error:1, message: 'Please provide all required field' });
+  } else {
+    Auth.resetPassword(data, function(err, response) {
       if (err)
         res.send(err);
       res.json(response);

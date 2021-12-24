@@ -20,7 +20,7 @@ router
   .get('/', Artwork.findAll)
   .get('/:id', Artwork.findOne)
   .get('/artist/:id', Artwork.findByArtistId)
-  .put('/', checkToken, Artwork.edit)
+  .put('/', checkToken, upload, Artwork.edit)
   .delete('/:id', checkToken, Artwork.delete)
 
 module.exports = router

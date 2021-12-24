@@ -17,11 +17,14 @@ var upload = multer({ storage: storage }).single('image')
 
 router
   .post('/create', Auth.create)
+  .get('/artists/', Auth.findAll)
+  .get('/artist/:username', Auth.findOne)
   .get('/verify/:id', Auth.verifyAccount)
   .post('/verify/:id', Auth.verifyAccountRepeat)
   .post('/login', Auth.login)
   .get('/verify-token', Auth.verifyToken)
   .get('/user', checkToken, Auth.find)
   .put('/user', checkToken, upload, Auth.update)
+  .post('/reset', Auth.resetPassword)
 
 module.exports = router

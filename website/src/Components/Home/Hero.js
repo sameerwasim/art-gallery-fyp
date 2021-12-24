@@ -10,7 +10,7 @@ const Hero = () => {
       {/*==================================== Hero ============================= */}
 
         <div style={heroStyle} className="p-5 ">
-            <h1 className="p-5 text-center text-primary m-5" style={{textShadow: '3px 2px #333'}}>
+            <h1 className="p-5 pt-3 pt-md-5 text-center text-white m-5 mt-0 mt-md-5" style={{textShadow: '3px 2px #333'}}>
                 Art Gallery to share the artist best
             </h1>
         </div>

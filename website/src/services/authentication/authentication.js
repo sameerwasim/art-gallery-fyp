@@ -66,6 +66,27 @@ const SignInService = async (email, password) => {
   }
 }
 
+const ResetPasswordService = async (email) => {
+
+  var error = 0;
+  if (!email) { error++; toast.warn('Missing Email or Username') }
+
+  if (error == 0) {
+    const response = await axios({
+      method: 'post',
+      url: `${app.apiUrl}${PATH}reset`,
+      data: {email}
+    })
+    if (response.data.error === 0) {
+      toast.success('Email Sent', {autoClose: false});
+      return true
+    } else {
+      toast.warn('Failed to reset', {autoClose: false})
+      return false
+    }
+  }
+}
+
 const VerifyAccountService = async (id) => {
   await axios.get(`${app.apiUrl}${PATH}verify/${id}`)
   .then(res => {
@@ -111,7 +132,23 @@ const UserProfileService = async (id) => {
   }
 }
 
+const findAllService = async (limit, artist = '', category = '') => {
+  const result = await axios.get(`${app.apiUrl}${PATH}artists/?${limit && `&limit=${limit}`}${artist && `&artist=${artist}`}${category && `&category=${category}`}`)
+  if (result.data.error === 0) {
+    return result.data.artists
+  } else {
+    return false
+  }
+}
 
+const findOneService = async (username) => {
+  const result = await axios.get(`${app.apiUrl}${PATH}artist/${username}`)
+  if (result.data.error === 0) {
+    return result.data.artist
+  } else {
+    return false
+  }
+}
 
 export {
   SignUpService,
@@ -119,5 +156,8 @@ export {
   VerifyAccountService,
   VerifyAccountRepeatService,
   UserProfileService,
-  UpdateProfileService
+  UpdateProfileService,
+  ResetPasswordService,
+  findAllService,
+  findOneService
 }

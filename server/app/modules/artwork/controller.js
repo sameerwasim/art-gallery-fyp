@@ -51,10 +51,11 @@ exports.create = function(req, res) {
 
 exports.edit = function(req, res) {
   const data = new Artwork(req.body);
+  const images = req.files
   if(req.body.constructor === Object && Object.keys(req.body).length === 0){
     res.status(400).send({ error:1, message: 'Please provide all required field' });
   } else {
-    Artwork.edit(data, function(err, response) {
+    Artwork.edit(data, images, function(err, response) {
       if (err)
         res.send(err);
       res.json(response);

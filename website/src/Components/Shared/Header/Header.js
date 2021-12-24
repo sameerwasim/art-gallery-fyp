@@ -23,12 +23,10 @@ const Header = () => {
         <Navbar.Collapse id="header-navbar-nav">
           <Nav className="me-auto">
             <Link className="nav-link" to="/search/artists">Search Artists</Link>
-            <Link className="nav-link mx-md-3" to="/search/artwork">Search Artworks</Link>
+            <Link className="nav-link mx-md-3" to="/search/artworks">Search Artworks</Link>
             <NavDropdown title="More" id="moreDropDown">
-              <Link className="dropdown-item" to="/reviews">All Reviews</Link>
               <Link className="dropdown-item" to="/about">About</Link>
               <Link className="dropdown-item" to="/contact">Contact</Link>
-              <Link className="dropdown-item" to="/faqs">FAQs</Link>
             </NavDropdown>
           </Nav>
           <Navbar.Brand className="d-none d-sm-block">

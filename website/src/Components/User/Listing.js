@@ -5,12 +5,14 @@ import {
   Row,
   Col,
   Card,
-  Image
+  Image,
+  Button
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Sidebar from '../Shared/UserDashboard/Sidebar'
 import { UserProfileService } from '../../services/authentication/authentication'
 import { findArtistArtworksService } from '../../services/artwork/artwork'
+import { FaPencilAlt } from 'react-icons/fa'
 import { urlHelper } from '../../helpers'
 import './user.scss'
 
@@ -48,7 +50,7 @@ const Listing = () => {
               <Row>
                 {artworks && artworks.map(artwork => (
                   <Col lg={4} md={6} className="my-4">
-                      <Link to={`/artwork/${urlHelper(artwork.title)}-${artwork.id}`} style={{textDecoration: 'none'}}>
+                      <Link to={`/edit/listing/${urlHelper(artwork.title)}-${artwork.id}`} style={{textDecoration: 'none'}}>
                         <Card className="border-0 shadow p-3">
                             <Image style={{objectFit:'contain', width:'100%', height:'300px'}} src={artwork.thumbnail} alt={artwork.title} />
                             <div className="text-center">

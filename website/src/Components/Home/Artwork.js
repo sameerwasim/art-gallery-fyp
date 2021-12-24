@@ -3,24 +3,30 @@ import { Link } from 'react-router-dom'
 import WebsiteLayout from '../Layouts/Website.layout'
 import { Container, Card, Row, Col, Image } from 'react-bootstrap'
 import { findArtworksService } from '../../services/artwork/artwork'
+import { findAllService } from '../../services/authentication/authentication'
 import { urlHelper } from '../../helpers'
+import { app } from '../../configuration/app.config'
 
 const Artwork = () => {
 
   const [artworks, setArtworks] = useState([])
+  const [artists, setArtists] = useState([])
   useEffect(async () => {
-    const result = await findArtworksService(8)
+    var result = await findArtworksService(8)
     setArtworks(result)
+
+    result = await findAllService(8)
+    setArtists(result)
   }, [])
 
   return (
-    <Container className="m-lg-5 m-0 px-md-5 px-0 artwork">
+    <Container className="m-lg-5 m-0 px-md-5 artwork">
         {/*==================================== Artwork ============================= */}
         <Row>
           <Col>
             <h1>Artworks(s)</h1>
           </Col>
-          <Col><div className="mt-2 d-flex justify-content-md-end">
+          <Col><div className="mt-2 d-flex justify-content-end">
             <Link className="btn btn-dark" to="/search/artworks">
               View All
             </Link>
@@ -43,72 +49,33 @@ const Artwork = () => {
         </Row>
         <hr/>
         {/*=========================== Artist ===============================*/}
+        <Row>
+          <Col>
+            <h1>Artworks(s)</h1>
+          </Col>
+          <Col><div className="mt-2 d-flex justify-content-end">
+            <Link className="btn btn-dark" to="/search/artists">
+              View All
+            </Link>
+          </div></Col>
+        </Row>
         <Row className="mt-5">
-        <h1 className="mb-4">Artist(s)</h1>
-                <Col  lg={2} md={4}>
-                    <Card className="border-0 p-3">
-                        <div className="d-flex justify-content-center">
-                        <Image width="150px" height="150px" style={{objectFit:'cover'}} className="rounded-circle" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVvcGxlJTIwcG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" />
-                        </div>
-                        <div className="text-center p-3">
-                            <h6>Artist Name</h6>
-                        </div>
-                    </Card>
-                </Col>
-                <Col  lg={2} md={4}>
-                    <Card className="border-0 p-3">
-                        <div className="d-flex justify-content-center">
-                        <Image width="150px" height="150px" style={{objectFit:'cover'}} className="rounded-circle" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlJTIwcG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" />
-
-                        </div>
-                        <div className="text-center p-3">
-                            <h6>Artist Name</h6>
-                        </div>
-                    </Card>
-                </Col>
-                <Col  lg={2} md={4}>
-                    <Card className="border-0 p-3">
-                        <div className="justify-content-center d-flex">
-                        <Image width="150px" height="150px" style={{objectFit:'cover'}} className="rounded-circle" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cGVvcGxlJTIwcG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" />
-                        </div>
-                        <div className="text-center p-3">
-                            <h6>Artist Name</h6>
-                        </div>
-                    </Card>
-                </Col>
-
-                <Col  lg={2} md={4}>
-                    <Card className="border-0 p-3">
-                        <div className="d-flex justify-content-center">
-                        <Image width="150px" height="150px" style={{objectFit:'cover'}} className="rounded-circle" src="https://images.unsplash.com/photo-1513956589380-bad6acb9b9d4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzZ8fHBlb3BsZSUyMHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="" />
-
-                        </div>
-                        <div className="text-center p-3">
-                            <h6>Artist Name</h6>
-                        </div>
-                    </Card>
-                </Col>
-                <Col  lg={2} md={4}>
-                    <Card className="border-0 p-3">
-                        <div className="d-flex justify-content-center">
-                        <Image width="150px" height="150px" style={{objectFit:'cover'}} className="rounded-circle" src="https://images.unsplash.com/photo-1536896407451-6e3dd976edd1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Njh8fHBlb3BsZSUyMHBvcnRyYWl0fGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="" />
-                        </div>
-                        <div className="text-center p-3">
-                            <h6>Artist Name</h6>
-                        </div>
-                    </Card>
-                </Col>
-                <Col  lg={2} md={4}>
-                    <Card className="border-0 p-3">
-                        <div className="d-flex justify-content-center">
-                        <Image width="150px" height="150px" style={{objectFit:'cover'}} className="rounded-circle" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVvcGxlJTIwcG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" />
-
-                        </div>
-                        <div className="text-center p-3">
-                            <h6>Artist Name</h6>
-                        </div>
-                    </Card>
-                </Col>
+          {artists && artists.map(artist => (
+            <Col lg={2} md={4}>
+                <Link to={`/artist/${urlHelper(artist.username)}`} style={{textDecoration: 'none'}}>
+                  <Card className="border-0 p-3">
+                      <div className="d-flex justify-content-center">
+                        <img className="shadow-sm img-fluid rounded-circle" src={(artist.image === 'no-user-profile-picture.jpeg')
+                          ? `${app.appUrl}no-user-profile-picture.jpeg` : `${app.apiUrl}public/${artist.image}`}
+                          height="100px" width="100px" alt={`${artist.name} Profile Picture`} />
+                      </div>
+                      <div className="text-center text-dark p-3">
+                        <h6>{artist.name}</h6>
+                      </div>
+                  </Card>
+                </Link>
+            </Col>
+          ))}
         </Row>
     </Container>
   )

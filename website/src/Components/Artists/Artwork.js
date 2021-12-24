@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import WebsiteLayout from "../Layouts/Website.layout";
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import {
   Container,
   Card,
@@ -10,15 +10,32 @@ import {
   Form,
   Button,
 } from "react-bootstrap";
-import { FaStar } from "react-icons/fa";
-import Reviews from '../Home/Reviews';
+import { FaClock, FaTag } from "react-icons/fa";
 
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 
+import { findOneArtworkService } from '../../services/artwork/artwork'
+import { app } from '../../configuration/app.config'
+import { urlHelper } from '../../helpers'
+
+const RecieveReviews = lazy(() => import('../Reviews/RecieveReviews'))
+
 const Artwork = () => {
 
   const { id } = useParams()
+  const [artwork, setArtwork] = useState([])
+  const [artworkId, setArtworkId] = useState()
+  const [artworkImages, setArtworkImages] = useState([])
+  const [similars, setSimilars] = useState([])
+  useEffect(async () => {
+    const split = id.split('-')
+    setArtworkId(split[split.length - 1])
+    const result = await findOneArtworkService(split[split.length - 1])
+    setArtwork(result)
+    setArtworkImages(JSON.parse(`[${result.images}]`))
+    setSimilars(JSON.parse(`[${result.similars}]`))
+  }, [id])
 
   return (
     <WebsiteLayout>
@@ -26,60 +43,86 @@ const Artwork = () => {
         <Row className="mb-5">
           <Col lg={5} md={12}>
             <Card className="border-0">
-            <Splide
-              options={{
-                rewind: true,
-                width: 800,
-
-                gap: "1rem",
-                breakpoints: {
-                     1440 : {perPage : 1, perMove : 1 },
-                     480 :  { perPage: 1 , perMove: 1}
-                },
-              }}
-            >
-              <SplideSlide>
-                <img style={{objectFit:'cover'}} width="100%" height="450px" src="https://images.unsplash.com/photo-1574169207511-e21a21c8075a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHBhaW50aW5nc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Image 1" />
-
-              </SplideSlide>
-              <SplideSlide>
-                <img style={{objectFit:'cover'}} width="100%" height="450px" src="https://images.unsplash.com/photo-1573491601995-695e5154f91b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTB8fHBhaW50aW5nc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Image 2" />
-              </SplideSlide>
-            </Splide>
+              <Splide
+                options={{
+                  rewind: true,
+                  width: 800,
+                  gap: "1rem",
+                  breakpoints: {
+                    1440 : {perPage : 1, perMove : 1 },
+                    480 :  { perPage: 1 , perMove: 1}
+                  },
+                }}
+              >
+                {artworkImages.map((image, i) => (
+                  <SplideSlide>
+                    <img style={{objectFit:'contain'}} width="100%" height="400px"
+                      src={`${app.apiUrl}public/${image.image}`} alt={`${artwork.title} ${i}`} key={i} />
+                  </SplideSlide>
+                ))}
+              </Splide>
             </Card>
           </Col>
-          <Col lg={7} md={12} className="mt-md-4 mt-lg-0 mt-4">
+          <Col lg={7} md={12} className="mt-md-1 mt-lg-0 mt-1">
               <Card className="shadow p-4 border-0">
-                    <h5 className="fw-bold">Price : <small className="text-muted">000</small></h5>
-                    <h5 className="fw-bold">Category : <span className="text-muted">Abc</span></h5>
-                    <h5 className=""> <strong>Description :</strong> &nbsp;
-                        <small className="text-muted">orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only fiv</small>
-                    </h5>
+                  <div className="d-flex justify-content-between">
+                    <h5 className="fw-bold mb-0">{artwork.title}</h5>
+                    <h5 className="fw-bold mb-0">#{artwork.id}</h5>
+                  </div>
+                  <small style={{fontSize: '0.7rem'}} className="text-muted">
+                    <FaClock /> <span className="mt-2 me-2">{new Date(artwork.createdAt).toLocaleString()},</span>
+                    <FaTag /> <span className="mt-2">{artwork.category}</span>
+                  </small>
+                  <p className="my-2">{artwork.description}</p>
+                  <h6 className="text-success text-end fw-bold">PKR {artwork.price}</h6>
               </Card>
               <Card className="mt-3 p-3 border-0 shadow">
-                <div className="d-flex flex-md-row flex-column">
-                    <div className="d-flex justify-content-center">
-                      <Image width="160px" height="160px" style={{objectFit:'cover'}} src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlJTIwcG9ydHJhaXR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="" className="rounded-circle mb-3" />
-                    </div>
-                  <div className="ms-3 align-self-center">
-                      <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                        {/* <h5>Name : <small className="text-muted">Sameer Waseem</small></h5>
-                        <h5>Category : <small className="text-muted">Abc</small></h5>
-                        <h5>Phone # : <small className="text-muted">000-0000</small></h5>
-                        <h5>Email : <small className="text-muted">email@example.com</small></h5> */}
- <p> an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only</p>
-                  </div>
-                </div>
-            </Card>
+                <Link to={`/artist/${artwork.username}`} style={{textDecoration: 'none'}} className="text-dark">
+                  <Row>
+                    <Col sm={2}>
+                      <div className="d-flex justify-content-center">
+                        <img className="shadow-sm img-fluid rounded-circle" src={(artwork.image === 'no-user-profile-picture.jpeg')
+                          ? `${app.appUrl}no-user-profile-picture.jpeg` : `${app.apiUrl}public/${artwork.image}`}
+                          height="100px" width="100px" alt={`${artwork.name} Profile Picture`} />
+                      </div>
+                    </Col>
+                    <Col sm={10}>
+                      <h2 className="mt-1">{artwork.name}</h2>
+                      <h6 className="text-muted">@{artwork.username}</h6>
+                    </Col>
+                    <Col sm={12} className="p-4">
+                      <h4>About {artwork.name}</h4>
+                      <p>{artwork.description}</p>
+                    </Col>
+                  </Row>
+                </Link>
+              </Card>
           </Col>
         </Row>
         <hr/>
-        <Row className="my-5">
-
+        <Row className="my-4">
+          <h3>More Artworks by {artwork.name}</h3>
+          {similars && similars.slice(0,6).map(similar => (
+            <Col lg={4} md={6} className="my-4">
+                <Link to={`/artwork/${urlHelper(similar.title)}-${similar.id}`} style={{textDecoration: 'none'}}>
+                  <Card className="border-0 shadow p-3">
+                      <Image style={{objectFit:'contain', width:'100%', height:'300px'}} src={similar.thumbnail} alt={similar.title} />
+                      <div className="text-center">
+                          <h6 className="mb-0 text-dark">{similar.title}</h6>
+                      <small className="text-muted">By: {similar.name}</small>
+                      </div>
+                  </Card>
+                </Link>
+            </Col>
+          ))}
         </Row>
-
-               <Reviews />
-
+        <hr/>
+        <Suspense fallback={<div>Loading Reviews</div>}>
+          <Row className="my-4">
+            <h3>Reviews </h3>
+            <RecieveReviews artworkId={artworkId} />
+          </Row>
+        </Suspense>
       </Container>
     </WebsiteLayout>
   );

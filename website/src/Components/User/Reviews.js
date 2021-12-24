@@ -1,6 +1,5 @@
 import WebsiteLayout from '../Layouts/Website.layout'
-
-import React, { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Container,
   Row,
@@ -14,19 +13,30 @@ import {
   Form,
   FloatingLabel
 } from "react-bootstrap";
+import { UserProfileService } from '../../services/authentication/authentication'
 import { Link } from "react-router-dom";
-
 import { FaUser, FaStar, FaHome, FaComment, FaPencilAlt } from 'react-icons/fa'
-
 import Sidebar from '../Shared/UserDashboard/Sidebar'
-import Reviews from "../Home/Reviews";
+import Reviews from "../Reviews/Reviews";
+import { findArtistReviewService, findAllGivenReviewService, updateReviewService } from '../../services/review/review'
 import './user.scss'
 
 const AllReviews = () => {
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [user, setUser] = useState([])
+  const [reviews, setReviews] = useState([])
+  const [given, setGivenReviews] = useState([])
+  useEffect(async () => {
+    var result = await UserProfileService()
+    const id = result.id
+    setUser(result);
+
+    result = await findArtistReviewService(id)
+    setReviews(result)
+
+    result = await findAllGivenReviewService(id)
+    setGivenReviews(result)
+  }, [])
 
   return (
     <WebsiteLayout>
@@ -36,88 +46,20 @@ const AllReviews = () => {
             <Sidebar active="dashboard" />
           </Col>
           <Col md={9} className="content">
-            <h1 className="my-5">Reviews</h1>
+            <h1>Reviews</h1>
             <Tabs
               defaultActiveKey="home"
               transition={false}
               id="noanim-tab-example"
               className="mb-3"
             >
-              <Tab eventKey="home" title="User Reviews">
-                <Reviews />
+              <Tab eventKey="home" title="Recieved Reviews">
+                <Reviews reviews={reviews} />
               </Tab>
               <Tab eventKey="profile" title="My Reviews">
-                <Row className="mt-5">
-                  {[1, 2, 3, 4].map((item) => (
-                    <Col lg={4} md={6}>
-                      <Card className="border-0 shadow p-4 mt-4">
-                        <div className="d-flex justify-content-end mb-3">
-                          <Button
-                            onClick={handleShow}
-                            className="btn btn-dark rounded-pill "
-                          >
-                            <FaPencilAlt /> &nbsp;Edit
-                          </Button>
-
-                          <Modal show={show} onHide={handleClose}>
-                            <Modal.Header closeButton>
-                              <Modal.Title>Edit Reviews</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                              <FloatingLabel
-                                controlId="floatingTextarea2"
-                                label="Edit Reviews"
-                              >
-                                <Form.Control
-                                  as="textarea"
-                                  placeholder="Leave a comment here"
-                                  style={{ height: "100px" }}
-                                />
-                              </FloatingLabel>
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button variant="primary" onClick={handleClose}>
-                                Save Changes
-                              </Button>
-                            </Modal.Footer>
-                          </Modal>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                          <div className="d-flex">
-                            <div>
-                              <Image
-                                width="60px"
-                                height="60px"
-                                src="https://via.placeholder.com/150"
-                                alt=""
-                                className="rounded-circle"
-                              />
-                            </div>
-                            <div className="align-self-center ms-3">
-                              <h6 className="">Sameer Waseem</h6>
-                              <div className="d-flex text-warning">
-                                <FaStar />
-                                <FaStar />
-                                <FaStar />
-                                <FaStar />
-                                <FaStar />
-                                <span className="ms-0 text-dark ps-2">5.0</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="">1 Hour ago</div>
-                        </div>
-                        <div className="mt-2">
-                          <p className="mb-0">
-                            Ipsum is simply dummy text of the printing and
-                            typesetting industry. Lorem Ipsum has been the
-                            industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and
-                            scrambled it to make a type specimen book.
-                          </p>
-                        </div>
-                      </Card>
-                    </Col>
+                <Row>
+                  {given.map((item, i) => (
+                    <GivenReview review={item} key={i} />
                   ))}
                 </Row>
               </Tab>
@@ -128,5 +70,80 @@ const AllReviews = () => {
     </WebsiteLayout>
   );
 };
+
+const GivenReview = (prop) => {
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const [review, setReview] = useState(prop.review)
+  const ratingRef = useRef()
+  const reviewRef = useRef()
+
+  useEffect(() => {
+    setReview(prop.review)
+  }, [prop])
+
+  const update = (id) => {
+    updateReviewService(ratingRef.current.value, reviewRef.current.value, review.id)
+  }
+
+  return (
+    <Col lg={4} md={6}>
+      <Card className="border-0 shadow p-4 mt-4">
+        <div className="d-flex justify-content-end mb-3">
+          <Button
+            onClick={handleShow}
+            className="btn btn-dark rounded-pill "
+          >
+            <FaPencilAlt /> &nbsp;Edit
+          </Button>
+
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Reviews</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Rating</Form.Label>
+                  <Form.Control ref={ratingRef}
+                    className="border-dark p-3 shadow-sm"
+                    as="select">
+                    <option value="">Select Rating</option>
+                    {[5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1].map(rating => (
+                       <option>{rating}</option>
+                    ))}
+                  </Form.Control>
+              </Form.Group>
+              <FloatingLabel
+                controlId="floatingTextarea2"
+                label="Edit Reviews"
+              >
+                <Form.Control
+                  as="textarea" ref={reviewRef}
+                  placeholder="Leave a review here"
+                  style={{ height: "100px" }}
+                />
+              </FloatingLabel>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="primary" onClick={update}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+        <h6>{review.name}</h6>
+        <span>(Rating {review.rating})</span>
+        <div className="mt-2">
+          <p className="mb-0">
+            {review.review}
+          </p>
+        </div>
+      </Card>
+    </Col>
+  )
+}
 
 export default AllReviews;

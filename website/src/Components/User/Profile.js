@@ -42,7 +42,6 @@ const Profile = () => {
             <Sidebar active="dashboard" />
           </Col>
           <Col md={9} className="content">
-
             <h1>{`${name}'s`} Profile</h1>
             <Form className="p-3">
               <Row>
